@@ -3,6 +3,7 @@ package jsonutils
 import (
 	"encoding/json"
 	"errors"
+	"io"
 	"maps"
 	"net/http"
 )
@@ -27,7 +28,7 @@ func ReadJSON(w http.ResponseWriter, r *http.Request, data any) error {
 	}
 
 	err = dec.Decode(&struct{}{})
-	if err != nil {
+	if err != io.EOF {
 		return errors.New("body must have a single JSON value")
 	}
 
